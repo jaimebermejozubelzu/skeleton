@@ -7,8 +7,8 @@ class PresentationInterface(ABC):
         pass
 
 class ConsolePresentation(PresentationInterface):
-    def __init__(self):
-        self.logic = LogicWarehouse()
+    def __init__(self, warehouse_persistence):
+        self.logic = warehouse_persistence
     
     def run(self):
         while True:

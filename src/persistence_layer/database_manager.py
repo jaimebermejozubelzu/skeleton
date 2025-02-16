@@ -1,29 +1,34 @@
-import sqlite3
-import os
-from config import DATABASE_PATH
+from abc import ABC, abstractmethod
 
-class DatabaseManager:
-    """Clase para manejar la conexión con SQLite."""
+class DatabaseManager(ABC):
+    """Interfaz base para manejar cualquier tipo de base de datos."""
 
-    def __init__(self, db_path=DATABASE_PATH):
-        """Inicializa el administrador de la base de datos con una ruta."""
-        self.db_path = db_path
-        self._ensure_database_exists()
+    @abstractmethod
+    def insert(self, table_name, data):
+        """Inserta un registro en la base de datos."""
+        pass
 
-    def _ensure_database_exists(self):
-        """Crea la base de datos si no existe."""
-        os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
+    @abstractmethod
+    def fetch_all(self, table_name):
+        """Devuelve todos los registros."""
+        pass
 
-    def execute_query(self, query, params=()):
-        """Ejecuta una consulta SQL de modificación (INSERT, UPDATE, DELETE)."""
-        with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.cursor()
-            cursor.execute(query, params)
-            conn.commit()
+    @abstractmethod
+    def fetch_by_id(self, table_name, record_id):
+        """Devuelve un registro por ID."""
+        pass
 
-    def fetch_query(self, query, params=()):
-        """Ejecuta una consulta SQL de lectura (SELECT) y devuelve los resultados."""
-        with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.cursor()
-            cursor.execute(query, params)
-            return cursor.fetchall()
+    @abstractmethod
+    def update(self, table_name, record_id, new_data):
+        """Actualiza un registro por ID."""
+        pass
+
+    @abstractmethod
+    def delete(self, table_name, record_id):
+        """Elimina un registro por ID."""
+        pass
+
+    @abstractmethod
+    def count(self, table_name):
+        """Cuenta los registros en una tabla."""
+        pass
