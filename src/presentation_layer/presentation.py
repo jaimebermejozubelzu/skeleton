@@ -41,4 +41,4 @@ class ConsolePresentation(PresentationInterface):
             elif opcion == "5":
                 break
             else:
-                print("Opción no válida.")
+                print("Opción no válida.") # Cambio
