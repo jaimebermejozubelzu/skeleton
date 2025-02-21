@@ -1,7 +1,7 @@
 import os
 
 # Aquí elegimos el "motor de la base de datos"
-DATABASE_TYPE = "sqlite"  # csv para CSV y sqlite para Sqlite-3
+DATABASE_TYPE = "csv"  # csv para CSV y sqlite para Sqlite-3
 """ Vital: según lo que seleccionemos trabajará con una u otra implementación de persistencia"""
 
 # Configuración de la base de datos

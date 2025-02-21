@@ -13,7 +13,7 @@ from config import DATABASE_TYPE
 def main():
     db_manager = SQLiteDatabaseManager() if DATABASE_TYPE == "sqlite" else CSVDatabaseManager()
     
-    warehouse_persistence = PersistenceWarehouse(db_manager)
+    warehouse_persistence = PersistenceWarehouse()
  
     app = ConsolePresentation(warehouse_persistence)
     app.run()

@@ -1,18 +1,36 @@
-from persistence_layer.persistence_entity import PersistenceEntity
+from persistence_layer.persistence_entity import PersistenceEntityInterface
+from persistence_layer.persistence_factory import get_persistence_driver
 
-class PersistenceWarehouse(PersistenceEntity):
-    """DAO para almacenes, heredando de PersistenceEntity."""
-    
-    def __init__(self, db_manager=None):
-        super().__init__(db_manager)
-        self.table_name = "warehouses"
+class PersistenceWarehouse(PersistenceEntityInterface):
+    def __init__(self):
+        self.driver = get_persistence_driver("warehouses")
 
-    def create_table(self):
-        """Crea la tabla de almacenes si no existe."""
-        query = """
-        CREATE TABLE IF NOT EXISTS warehouses (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL UNIQUE
-        );
-        """
-        self.db_manager.execute_query(query)
+    def create(self, name):
+        self.driver.create(name)
+
+    def select_all(self):
+        return self.driver.select_all()
+
+    def select_by_id(self, id):
+        return self.driver.select_by_id(id)
+
+    def select_by_criteria(self, criteria: dict):
+        return self.driver.select_by_criteria(criteria)
+
+    def update(self, id, new_name):
+        self.driver.update(id, new_name)
+
+    def delete(self, id):
+        self.driver.delete(id)
+
+    def delete_all(self):
+        self.driver.delete_all()
+
+    def count(self):
+        return self.driver.count()
+
+    def exists(self, id):
+        return self.driver.exists(id)
+
+    def create_many(self, names: list):
+        self.driver.create_many(names)
